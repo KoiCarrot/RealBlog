@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load blog_tags %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<![endif]-->
+    <title>KoiCarrot技术博客</title>
+    <!-- BOOTSTRAP CORE STYLE -->
+    <link href="{% static 'blog/css/bootstrap.css' %}" rel="stylesheet" />
+    <!-- FONT AWESOME ICON STYLE -->
+    <link href="{% static 'blog/css/font-awesome.css' %}" rel="stylesheet" />
+    <!-- CUSTOM STYLE CSS -->
+    <link href="{% static 'blog/css/style.css' %}" rel="stylesheet" />
+	<!-- highlight-->
+	<link rel="stylesheet" href="{% static 'blog/css/highlights/github.css' %}">
+</head>
+<body>
+    <div id="header">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 logo-div">
+                        <div class="logo-inner text-center">
+                            <div class="logo-name">
+                                <a href="index.html">
+                                    <img src="{% static 'blog/img/me.jpg' %}" class="img-circle" />
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-8 header-text-top " id="about">
+
+
+
+                        <h1>欢迎来到KoiCarrot技术博客</h1>
+						这里会分享一些基础技术入门教程以及记录一些我自己项目遇到的重点难点供他人研究参阅交流，Anyway,Welcom! <br /> 
+						主要技术涉及Python,Django,MySQL,网络编程<br />
+						<h2><strong>Let's get start</strong></h2>
+                        <i></i>
+						
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END HEADER SECTION-->
+    <div class="info-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    欢迎骚扰 <strong>402704088</strong>@qq.com
+                </div>
+                <div class="col-md-2">
+                    <div class="social-link">
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
+    <!--END INFO SECTION-->
+    <div class="container">
+
+        <div class="row">
+			
+            <div class="col-md-8 ">
+			{% block main %}
+				{% for post in post_list %}
+                <div class="blog-post-{{post.pk}}">
+                    <h2>{{post.title}}</h2>
+                    <h4>Posted by <a href="#">{{post.author}}</a> {{post.created_time}} </h4>
+                    <p>
+					{{post.excerpt}}
+                    </p>
+                    <a href="{{post.get_absolute_url}}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
+                </div>
+				{% empty %}
+				<div class='no-post'>暂时还没有发布文章!</div>
+				{% endfor %}
+			{% endblock main %}
+                <br />
+                <nav>
+                    {% block page %}
+					{% if is_paginated %}
+						<div class="pagination">
+						  {% if first %}
+							<a href="?page=1">1</a>
+						  {% endif %}
+						  {% if left %}
+							{% if left_has_more %}
+								<span>...</span>
+							{% endif %}
+							{% for i in left %}
+								<a href="?page={{ i }}">{{ i }}</a>
+							{% endfor %}
+						  {% endif %}
+						  <a href="?page={{ page_obj.number }}" style="color: red">{{ page_obj.number }}</a>
+						  {% if right %}
+							{% for i in right %}
+								<a href="?page={{ i }}">{{ i }}</a>
+							{% endfor %}
+							{% if right_has_more %}
+								<span>...</span>
+							{% endif %}
+						  {% endif %}
+						  {% if last %}
+							<a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+						  {% endif %}
+						</div>
+					{% endif %}
+					{% endblock page %}
+                </nav>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3" style="padding-top: 30px;">
+				<div class="row">
+				{% get_categories as category %}
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>分类</strong></li>
+					{% for cate in category %}
+                    <li class="list-group-item">{{cate.name}}({{cate.num_posts}})</li>
+					{% empty %}
+					暂无分类
+					{% endfor %}
+                </ul>
+				</div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!--END HOME PAGE SECTION-->
+    <div class="footer-sec" style="margin-top: 0px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 foo-inner">
+                    &copy; 2017 KoiCarrot.cn | More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END FOOTER SECTION -->
+    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME -->
+    <!-- CORE JQUERY -->
+    <script src="{% static 'blog/js/jquery-1.11.1.js' %}"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="{% static 'blog/js/bootstrap.js' %}"></script>
+
+</body>
+</html>
