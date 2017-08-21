@@ -25,7 +25,7 @@ SECRET_KEY = '7z&0x%d8anhe7ejxmn#rup+pzfes=_1k#li-a*=r8gq-0z_90a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','.koicarrot.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','.koicarrot.cn']
 
 
 # Application definition
@@ -116,7 +116,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
